@@ -1,8 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-export default function Product({ description, image, price, id }) {
+export default function Product({ description, image, price, id, addToCart }) {
     const imgSrc = image.src
+
     return (
         <div>
             <div>
@@ -11,7 +12,7 @@ export default function Product({ description, image, price, id }) {
             <div>
                 {`${description} ${price} €`}
             </div>
-            <button>Ajouter au panier</button>
+            <button onClick={() => addToCart(id)}>Ajouter au panier</button>
         </div>
     )
 }

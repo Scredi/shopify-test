@@ -6,8 +6,7 @@ import { getProducts, createCart } from './api/shopify'
 import styles from '../styles/Home.module.css'
 
 export default function Home(props) {
-  const [cart] = useState(props.cart)
-  , [products] = useState(props.products)
+  const [products] = useState(props.products)
 
   return (
     <div className={styles.container}>
@@ -41,14 +40,12 @@ export default function Home(props) {
 
 export async function getStaticProps(context) {
   const products = await getProducts(); // Fetch products
-  const cart = await createCart();
   //const infos = await client.shop.fetchInfo(); // Fetch shop Info if you think about SEO and title and ... to your page
   //const policies = await client.shop.fetchPolicies(); // fetch shop policy if you have any 
   return {
     props: {
       // infos: JSON.parse(JSON.stringify(infos)),
       // policies: JSON.parse(JSON.stringify(policies)),
-      cart,
       products
     }
   }

@@ -2,15 +2,22 @@ import { getProducts, getProduct } from '../api/shopify'
 import Product from '../../components/Product'
 
 export default function ProductPage({ product }) {
-    return (
-        <div>
-          <Product
-            description={product.description}
-            price={product.variants[0].price}
-            image={product.images[0]}
-          />
-        </div>
-    )
+  const handleAddToCart = (id) => {
+    // On recup l'id du cart crée à l'init de l'app depuis le context ou un store redux afin d'y ajouter son produit
+    console.log(id)
+  }
+
+  return (
+      <div>
+        <Product
+          description={product.description}
+          price={product.variants[0].price}
+          image={product.images[0]}
+          id={product.id}
+          addToCart={handleAddToCart}
+        />
+      </div>
+  )
 }
 
 export async function getStaticProps({ params }) {
