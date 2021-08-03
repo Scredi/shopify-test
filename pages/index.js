@@ -1,8 +1,11 @@
+import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
+import { client } from '../utils/shopify-client'
+import Products from '../components/Products'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home({ products }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,44 +15,9 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <section className={styles.products}>
+          <Products data={products} />
+        </section>
       </main>
 
       <footer className={styles.footer}>
@@ -66,4 +34,18 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps(context) {
+
+  const products = await client.product.fetchAll(); // Fetch product
+  //const infos = await client.shop.fetchInfo(); // Fetch shop Info if you think about SEO and title and ... to your page
+  //const policies = await client.shop.fetchPolicies(); // fetch shop policy if you have any 
+  return {
+    props: {
+      // infos: JSON.parse(JSON.stringify(infos)),
+      // policies: JSON.parse(JSON.stringify(policies)),
+      products: JSON.parse(JSON.stringify(products)),
+    }
+  }
 }
