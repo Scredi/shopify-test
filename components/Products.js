@@ -1,18 +1,28 @@
 import React from 'react'
-import ProductPreview from './ProductPreview'
+import Image from 'next/image'
+import Link from 'next/link'
+
+const ProductLink = ({ handle, children }) => (
+    <Link href={`/product/${handle}`}>
+        <a>{children}</a>
+    </Link>
+)
 
 export default function Products({ data }) {
     return (
         <>
             {   data && data.length > 0 ?
                 data.map(product => (
-                    <ProductPreview
-                        key={product.id}
-                        description={product.description}
-                        images={product.images}
-                        variants={product.variants}
-                        id={product.id}
-                    />
+                <div key={product.id}>
+                    <ProductLink handle={product.handle}>
+                        <div>
+                            <Image src={product.images[0].src} alt="" width={100} height={100} layout="responsive" />
+                        </div>
+                        <div>
+                            {`${product.description} ${product.variants[0].price} €`}
+                        </div>
+                    </ProductLink>
+                </div>
                 )) : <div>Aucun produits</div>
             }
         </>
